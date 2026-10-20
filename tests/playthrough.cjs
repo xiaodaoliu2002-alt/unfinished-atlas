@@ -5,6 +5,8 @@ const fs=require('node:fs');
   const browser=await chromium.launch({headless:true,channel:'chrome'});
   const page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});
   const errors=[]; page.on('pageerror',e=>errors.push(e.message));
+  const externalRequests=[];
+  page.on('request',r=>{if(/^https?:/.test(r.url()))externalRequests.push(r.url());});
   page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`)});
   fs.mkdirSync('tests/screenshots',{recursive:true});
   const click=selector=>page.locator(selector).click();
@@ -13,9 +15,22 @@ const fs=require('node:fs');
   const clue=key=>click(`[data-clue="${key}"]`);
   const stamp=async(i,type)=>{await click(`[data-claim="${i}"]`);await click(`[data-stamp="${type}"]`);};
   const next=async()=>{await act('submit');assert(await page.locator('dialog[open]').count());await act('next-chapter');};
-  await page.goto('http://127.0.0.1:4173');
+  const target=process.env.GAME_URL || 'http://127.0.0.1:4173';
+  if(target.startsWith('file:'))await page.context().setOffline(true);
+  await page.goto(target);
+  await page.evaluate(()=>document.fonts.ready);
+  assert(await page.evaluate(()=>document.fonts.check('12px "Atlas Pixel"','图鉴档案袋')),'Chinese pixel font loads');
   await page.screenshot({path:'tests/screenshots/landing.png',fullPage:true});
   await act('start');
+  for(const selector of ['.portrait','.photo','.paper']){
+    const loaded=await page.locator(selector).first().evaluate(async el=>{
+      const url=getComputedStyle(el).backgroundImage;
+      if(!url.startsWith('url('))return false;
+      const image=new Image();image.src=url.slice(5,-2);
+      try{await image.decode();return image.naturalWidth>0;}catch{return false;}
+    });
+    assert(loaded,`${selector} background image loads offline`);
+  }
   await page.screenshot({path:'tests/screenshots/chapter-1.png',fullPage:true});
   await act('submit');
   assert.equal(await page.locator('dialog[open]').count(),0,'Incomplete evidence must not advance');
@@ -58,6 +73,7 @@ const fs=require('node:fs');
   const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth);
   assert.equal(overflow,false,'Mobile layout must not overflow horizontally');
   assert.equal(errors.length,0,errors.join('\n'));
+  if(target.startsWith('file:'))assert.equal(externalRequests.length,0,'Offline HTML makes no network requests');
   console.log(JSON.stringify({result:'PASS',verified:['Four-act full playthrough','Missing evidence and incorrect stamps blocked','Privacy redaction required','Save and reload','All three reader branches','Retest after editing','Publish and ending','Replay','390px mobile layout','No browser errors'],screenshots:'tests/screenshots'},null,2));
   await browser.close();
 })().catch(e=>{console.error(e);process.exit(1)});

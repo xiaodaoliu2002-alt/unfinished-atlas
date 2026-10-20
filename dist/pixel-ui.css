@@ -1,0 +1,152 @@
+/* Static pixel UI. Font and paper texture are shipped locally for offline play. */
+@font-face {
+  font-family: 'Atlas Pixel';
+  src: url('assets/fonts/fusion-pixel-12px-zh-hans.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+:root { --pixel-font: 'Atlas Pixel', monospace; --ink: #3b3528; }
+body, body * { font-family: var(--pixel-font); font-weight: 400; }
+strong, b { font-weight: 400; }
+.brand { font-size:24px; letter-spacing:2px; }
+.chapter-heading h1 { font-size:24px; line-height:1.3; }
+.chapter-number { font-size:36px; }
+.chapter-heading p, .top-meta, .section-label, .section-label small,
+.room-label, .utility button, .chapter-step, .save-dot,
+.paper-top, .draft-sub, .claim-id, .claim-status, .draft-tip,
+.dialogue-foot, .dialogue-foot button, .speaker small,
+.folder-note, .tool-actions button, .footer, .landing-footer,
+.landing .edition, .eyebrow, .paper .subline { font-size:12px; }
+.top-meta { letter-spacing:1px; }
+.speaker { font-size:18px; letter-spacing:2px; }
+.speech { font-size:18px; line-height:1.8; }
+.section-label { height:auto; min-height:20px; letter-spacing:1px; }
+.paper h2, .draft-sheet h2, .editor-card h2 { font-size:24px; line-height:1.35; letter-spacing:0; }
+.paper, .document-quote { font-size:16px; line-height:1.8; }
+.paper .fine, .record-row, .found-note { font-size:12px; line-height:1.8; }
+.claim-text { font-size:14px; line-height:1.8; padding-right:26px; }
+.claim-status { margin-top:6px; }
+.submit, .primary, .secondary { font-size:16px; }
+.stamp { font-size:18px; transform:none; letter-spacing:2px; }
+.stamp.pending, .stamp.private { transform:none; }
+.entry-option { font-size:14px; line-height:1.8; }
+.editor-card p, .editor-side p, .editor-note, .cover-button { font-size:12px; }
+.editor-side h2 { font-size:24px; }
+.landing h1 { font-size:84px; font-weight:400; line-height:1.2; }
+.landing .subtitle { font-size:24px; letter-spacing:4px; }
+.landing .intro { font-size:18px; }
+.cover-paper h2 { font-size:36px; }
+/* A cut-corner inventory label with a square punch and stitched frame. */
+.case-folder { border:0; }
+.case-folder .section-label { padding-left:0; }
+.file-list { gap:10px; padding:3px 5px 7px 0; }
+.file-tab {
+  --tag-fill:#858361; --tag-edge:#aaa779;
+  min-height:62px; padding:12px 15px 12px 28px; gap:9px;
+  color:#252b21; background:var(--tag-fill); border:0; box-shadow:none;
+  clip-path:polygon(8px 0,calc(100% - 8px) 0,calc(100% - 8px) 4px,calc(100% - 4px) 4px,calc(100% - 4px) 8px,100% 8px,100% calc(100% - 8px),calc(100% - 4px) calc(100% - 8px),calc(100% - 4px) calc(100% - 4px),calc(100% - 8px) calc(100% - 4px),calc(100% - 8px) 100%,8px 100%,8px calc(100% - 4px),4px calc(100% - 4px),4px calc(100% - 8px),0 calc(100% - 8px),0 8px,4px 8px,4px 4px,8px 4px);
+  font-size:16px; line-height:1.5; text-align:left;
+}
+.file-tab:before {
+  content:''; position:absolute; left:11px; top:calc(50% - 3px);
+  width:6px; height:6px; background:#333a2a; box-shadow:0 -2px var(--tag-edge),-2px 0 var(--tag-edge),2px 0 #626649,0 2px #626649;
+}
+.file-tab:after {
+  content:''; position:absolute; inset:5px; border:1px dashed var(--tag-edge); pointer-events:none;
+}
+.file-tab:hover { --tag-fill:#b5ad7e; --tag-edge:#ded09b; background:var(--tag-fill); }
+.file-tab.selected { --tag-fill:#d8bf7d; --tag-edge:#f2dfa2; color:#3d3320; background:var(--tag-fill); transform:none; box-shadow:none; }
+.file-tab.selected .file-no { color:#6e4e24; }
+.file-tab .file-no { font-size:12px; opacity:1; }
+.file-tab .read-mark { font-size:12px; right:10px; top:6px; color:#52633e; opacity:1; }
+.file-tab.locked { --tag-fill:#535a43; --tag-edge:#6b7557; color:#a3ad8b; background:var(--tag-fill); opacity:1; }
+.file-tab:focus-visible { outline:none; --tag-edge:#fff5b7; --tag-fill:#b9b07e; }
+.file-tab:focus-visible:after { border:2px solid #fff5b7; }
+/* Actual generated pixel-paper artwork, kept behind live readable text. */
+.paper:not(.empty), .draft-sheet, .editor-card, .blank-card {
+  background-color:#e5d5a3;
+  background-image:url('assets/paper-aged.png');
+  background-position:center;
+  background-size:100% 100%;
+  image-rendering:pixelated;
+  border:0;
+  box-shadow:4px 0 #a18a59,0 4px #a18a59,4px 4px #a18a59,7px 7px #2a2e22;
+}
+.paper { padding:22px; min-height:380px; }
+.paper-top { color:#807044; letter-spacing:1px; border-bottom:2px dashed #b59f68; padding-bottom:10px; }
+.paper h2 { color:#453821; }
+.paper .fine { color:#76653f; }
+.paper-rule { border-top:2px dashed #b59f68; }
+.clue { color:#3a3825; background:#ab7c2717; border-bottom:2px dashed #937136; }
+.clue.chosen { background:#d3b36d; outline:2px solid #8a6f37; }
+.claim.active { border:2px dashed #917b45; background:#dfca8b80; }
+.draft-sheet { padding:20px 16px 15px; }
+.draft-sheet:before { top:-6px; height:10px; width:44px; left:calc(50% - 22px); }
+.paper .flip { font-size:12px; background:#dfcc94; border:2px solid #a5905f; }
+.paper.empty { background:#454a37; }
+.photo { border-color:#f1dfad; }
+.dialogue { border-width:3px; }
+.claim-status.stamped { letter-spacing:3px; }
+.primary, .secondary, .tool-actions button { border-width:2px; }
+.chapter-step span { font-size:12px; }
+.end-content h1 { font-size:48px; }
+@media (max-width:1100px) {
+  .brand { font-size:24px; }
+  .file-tab { font-size:14px; padding-left:24px; gap:6px; }
+  .file-tab .file-no { display:none; }
+  .paper { padding:18px 14px; }
+  .paper h2 { font-size:20px; }
+  .chapter-step:after { width:12px!important; }
+  .speaker small { font-size:12px; }
+}
+@media (max-width:850px) {
+  .file-list { gap:8px; padding:4px 2px 8px; }
+  .file-tab { min-width:150px; min-height:52px; font-size:16px; flex-shrink:0; }
+  .file-tab .file-no { display:block; }
+  .speech { font-size:16px; line-height:1.75; }
+  .room-label, .dialogue-foot, .dialogue-foot button { font-size:12px; letter-spacing:0; }
+  .paper { font-size:14px; }
+  .paper h2 { font-size:20px; }
+  .landing h1 { font-size:72px; }
+  .topbar { gap:8px; }
+}
+@media (max-width:600px) {
+  .brand { font-size:18px; letter-spacing:0; gap:8px; }
+  .utility { gap:2px; }
+  .utility button { font-size:12px; padding:5px; }
+  .brand-icon { width:18px; height:23px; }
+  .brand-icon:after { left:3px; width:8px; }
+  .chapterbar { padding:12px; gap:6px; }
+  .chapter-heading { gap:9px; }
+  .chapter-heading h1 { font-size:18px; letter-spacing:0; }
+  .chapter-heading p { font-size:12px; letter-spacing:0; }
+  .chapter-number { font-size:24px; }
+  .chapter-progress { gap:3px; }
+  .chapter-step span { width:15px; height:18px; }
+  .scene { height:250px; }
+  .dialogue { top:40px; bottom:14px; padding:12px 10px; }
+  .speech { font-size:14px; line-height:1.8; margin:8px 0; }
+  .speaker { font-size:18px; }
+  .dialogue-foot { flex-wrap:wrap; gap:3px; }
+  .dialogue-foot button { font-size:12px; }
+  .section-label { font-size:12px; letter-spacing:0; }
+  .section-label small { font-size:12px; }
+  .paper { padding:16px 12px; font-size:12px; line-height:2; }
+  .paper h2 { font-size:18px; line-height:1.6; }
+  .paper-top { font-size:10px; letter-spacing:0; }
+  .paper .fine, .paper .subline, .record-row { font-size:12px; }
+  .document-quote { font-size:14px; }
+  .record-row { flex-wrap:wrap; }
+  .paper .flip { font-size:12px; }
+  .draft-sheet { padding:18px 16px; }
+  .claim-text { font-size:14px; }
+  .submit { font-size:18px; }
+  .file-tab { min-width:148px; }
+  .editor-card h2 { font-size:24px; }
+  .landing h1 { font-size:60px; letter-spacing:4px; }
+  .landing .subtitle { font-size:18px; }
+  .landing .intro { font-size:16px; }
+  .footer { font-size:12px; letter-spacing:0; flex-wrap:wrap; }
+  .end-content h1 { font-size:36px; }
+}

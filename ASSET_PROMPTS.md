@@ -14,3 +14,7 @@ Use case: stylized-concept. Asset type: wide pixel art background for a Chinese 
 
 Use case: stylized-concept. Asset type: one archival photograph sprite atlas for a narrative pixel art game. Exactly THREE equal square pictures arranged horizontally in a single row, aspect ratio 3:1, no margins or separators or text. LEFT cell: vintage sepia industrial workshop photograph with a milling/grinding machine filling left and center, Chinese worker in work jacket behind machine, at very far right a second person's outstretched hand and forearm enters the photograph, only the hand and forearm visible. MIDDLE cell: warm sepia Chinese family circa late twentieth century, grandmother and young family gathered round small CRT television on a cabinet, table with bowls, modest room, intimate candid scene. RIGHT cell: vintage desk seen at a slight angle, telegraph key, coiled wire, blank cream message paper and envelope, dark wood. All photographs are original pixel art with crisp chunky square pixels, dithering, small muted sepia charcoal olive amber palette, nostalgic quiet emotion. These are illustrations of fictional archival materials, not real records. No readable writing anywhere, no UI, no watermark.
 
+
+## 文书泛黄纸张 UI
+
+内置 image_gen 生成，背景用于实时 HTML 文书正文。完整提示词另存 paper-prompt.txt。
